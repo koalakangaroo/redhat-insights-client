@@ -1,0 +1,21 @@
+---
+
+- name: Enable Red Hat Insights Client Repo
+  command: subscription-manager repos --enable=rhel-{{ ansible_distribution_major_version }}-server-insights-3-rpms
+  when: ansible_os_family == "RedHat"
+
+- name: Install Red Hat Insights Client
+  yum: name={{ item }} state=present
+  with_items:
+      - insights-client
+
+- name: Configure Red Hat Insights Client
+  template: src=insights-client.conf.j2 dest=/etc/insights-client/insights-client.conf
+
+- stat: path=/etc/insights-client/.unregistered
+  register: unreg
+
+# Only register if this system hasn't been registered before
+- name: Register to the Red Hat Insights Service
+  command: insights-client --register creates=/etc/insights-client/.registered
+  when: unreg.stat.exists == false
