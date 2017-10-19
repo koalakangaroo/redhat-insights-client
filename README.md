@@ -23,7 +23,7 @@ Example Playbook
 
     - hosts: all
       roles:
-      - { role: jaylin.insights-client, when: ansible_os_family == 'RedHat' }
+      - { role: koalakangaroo.redhat-insights-client, when: ansible_os_family == 'RedHat' }
 
 
 Example Use
@@ -32,7 +32,7 @@ Example Use
 1. On a system where [Ansible is installed](http://docs.ansible.com/ansible/intro_installation.html), run the following command:
 
     ```bash
-    $ ansible-galaxy install jaylin.redhat-insights-client
+    $ ansible-galaxy install koalakangaroo.redhat-insights-client
     ```
 
 1. Copy the Example Playbook to a file named 'install-insights.yml'.
